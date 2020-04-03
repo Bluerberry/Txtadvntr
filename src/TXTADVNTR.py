@@ -214,6 +214,7 @@ def init_combat(playersneakattack=False, monstersneakattack=False):
 		player.xp -= player.lvl * 5
 		player.lvl += 1
 	maze[player.y][player.x][2] = False
+	maze[player.y][player.x][1] = True
 
 # Generates a 3x3 tile scene
 def write_scene():
@@ -252,7 +253,7 @@ def gameloop(savefile):
 	scr.clear()
 	typewrite(0, 0, 'All you know, is to kill!', threshold=42, wait=True)
 	while True:
-		actionset = [[['stop', 'exit', 'leave', 'quit'], stop], [['interact', 'open', 'inspect', 'search', 'loot', 'look'], eit]]
+		actionset = [[['stop', 'exit', 'leave', 'quit'], stop], [['interact', 'open', 'inspect', 'search', 'loot', 'look', 'room', 'area'], eit]]
 		if maze[player.y][player.x][2]:
 			monster = monsterTemplate()
 			monster_starting_health = monster.health
@@ -422,13 +423,14 @@ def eit():
 		['You found a pair of shoes! You gain some shielding and lose some speed.', 'player.shielding, player.speed += -1, 1'],
 		['You found a coin cache! You gain 15 xp.', 'player.xp += 15'],
 		['You found a sick bagpipe-dubstep mixtape! You gain 10 hp.', 'player.health += 10'],
-		['You find a strange rock. When you pick it up, you feel the blood rushing to your left nostril. You gain 10 levels.', 'player.level += 10'],
+		['You find a strange rock. When you pick it up, you feel the blood rushing to your left nostril. You gain 10 levels.', 'player.lvl += 10'],
 		['You find a strange white powder lying in the corner. Snort it. You gain speed.', 'player.speed += 2']
 	][randint(0, 8)] if maze[player.y][player.x][1] else [
 		['You found nothing but cobwebs...', ''],
 		['You found nothing but some gravel...', ''],
 		['You found nothing but the bones of your predecessors...', '']
 	][randint(0, 2)]
+	print('hey')
 	exec(item[1])
 	scr.clear()
 	write_scene()
